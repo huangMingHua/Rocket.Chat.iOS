@@ -18,7 +18,7 @@ def diff_pods
 end
 
 def jitsi_pods
-  pod 'JitsiMeetSDK'
+  #pod 'JitsiMeetSDK'
 end
 
 def shared_pods
@@ -60,21 +60,14 @@ def shared_pods
   pod 'FLEX', '~> 2.0', :configurations => ['Debug', 'Beta']
 end
 
-target 'Rocket.Chat.ShareExtension' do
-  pod 'Nuke-FLAnimatedImage-Plugin'
-  database_pods
-  ui_pods
-  diff_pods
-end
+
 
 target 'Rocket.Chat' do
   shared_pods
   jitsi_pods
 end
 
-target 'Rocket.ChatTests' do
-  shared_pods
-end
+
 
 post_install do |installer|
   swift42Targets = ['RCMarkdownParser', 'MobilePlayer']
@@ -83,7 +76,9 @@ post_install do |installer|
     target.build_configurations.each do |config|
       config.build_settings['SWIFT_VERSION'] = '4.1'
       config.build_settings['ENABLE_BITCODE'] = 'NO'
-
+      if target.name == 'Nuke-FLAnimatedImage-Plugin'
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET']='10.0'
+      end
       if config.name == 'Debug'
         config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Onone'
       else

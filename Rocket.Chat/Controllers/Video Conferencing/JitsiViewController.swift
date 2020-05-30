@@ -7,14 +7,14 @@
 //
 
 import UIKit
-import JitsiMeet
+//import JitsiMeet
 
 final class JitsiViewController: UIViewController {
 
     let viewModel = JitsiViewModel()
     let timer = Timer()
 
-    @IBOutlet weak var jitsiMeetView: JitsiMeetView?
+    //@IBOutlet weak var jitsiMeetView: JitsiMeetView?
 
     deinit {
         timer.invalidate()
@@ -35,19 +35,19 @@ final class JitsiViewController: UIViewController {
             self?.updateJitsiTimeout()
         }
 
-        jitsiMeetView?.delegate = self
-
-        jitsiMeetView?.join(.fromBuilder { [viewModel] in
-            $0.audioMuted = false
-            $0.videoMuted = true
-            $0.userInfo = JitsiMeetUserInfo(
-                displayName: viewModel.userDisplayName,
-                andEmail: nil,
-                andAvatar: URL(string: viewModel.userAvatar)
-            )
-            $0.serverURL = URL(string: viewModel.videoCallServerURL)
-            $0.room = viewModel.videoCallRoomId
-        })
+//        jitsiMeetView?.delegate = self
+//
+//        jitsiMeetView?.join(.fromBuilder { [viewModel] in
+//            $0.audioMuted = false
+//            $0.videoMuted = true
+//            $0.userInfo = JitsiMeetUserInfo(
+//                displayName: viewModel.userDisplayName,
+//                andEmail: nil,
+//                andAvatar: URL(string: viewModel.userAvatar)
+//            )
+//            $0.serverURL = URL(string: viewModel.videoCallServerURL)
+//            $0.room = viewModel.videoCallRoomId
+//        })
     }
 
     func updateJitsiTimeout() {
@@ -58,8 +58,8 @@ final class JitsiViewController: UIViewController {
     func close() {
         timer.invalidate()
 
-        jitsiMeetView?.removeFromSuperview()
-        jitsiMeetView = nil
+        //jitsiMeetView?.removeFromSuperview()
+        //jitsiMeetView = nil
 
         dismiss(animated: true, completion: nil)
     }
@@ -68,7 +68,7 @@ final class JitsiViewController: UIViewController {
 
 // MARK: JitsiMeetViewDelegate
 
-extension JitsiViewController: JitsiMeetViewDelegate {
+extension JitsiViewController/*: JitsiMeetViewDelegate*/ {
 
     func onJitsiMeetViewDelegateEvent(name: String, data: [AnyHashable: Any]) {
         Log.debug("[\(#file):\(#line)] JitsiMeetViewDelegate \(name) \(data)")
